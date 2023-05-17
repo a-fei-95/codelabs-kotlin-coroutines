@@ -22,6 +22,7 @@ import com.example.android.kotlincoroutines.fakes.MainNetworkFake
 import com.example.android.kotlincoroutines.fakes.TitleDaoFake
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Rule
 import org.junit.Test
@@ -55,6 +56,6 @@ class TitleRepositoryTest {
             subject.refreshTitle()
         }
 
-        advanceTimeBy(5_000)
+        testScheduler.apply { advanceTimeBy(5_000); runCurrent() }
     }
 }

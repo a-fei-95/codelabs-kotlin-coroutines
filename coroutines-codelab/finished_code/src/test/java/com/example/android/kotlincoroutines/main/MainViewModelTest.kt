@@ -25,6 +25,7 @@ import com.example.android.kotlincoroutines.main.utils.captureValues
 import com.example.android.kotlincoroutines.main.utils.getValueForTest
 import com.google.common.truth.Truth
 import com.google.common.truth.Truth.assertThat
+import kotlinx.coroutines.test.advanceTimeBy
 import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.MediaType
 import okhttp3.ResponseBody
@@ -60,7 +61,7 @@ class MainViewModelTest {
     fun whenMainClicked_updatesTaps() {
         subject.onMainViewClicked()
         Truth.assertThat(subject.taps.getValueForTest()).isEqualTo("0 taps")
-        coroutineScope.advanceTimeBy(1000)
+        coroutineScope.testScheduler.apply { advanceTimeBy(1000); runCurrent() }
         Truth.assertThat(subject.taps.getValueForTest()).isEqualTo("1 taps")
     }
 
